@@ -1,6 +1,6 @@
 public class BuyAndSellStock {
     public static void main(String[] args) {
-        int stock[] = { 3, 2, 5, 1, 0 };
+        int stock[] = { 1, 2, 0, 5, 1 };
         int left = 0;
         int right = left + 1;
         int max = 0;
