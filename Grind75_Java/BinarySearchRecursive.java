@@ -7,9 +7,9 @@ public class BinarySearchRecursive {
             if (arr[mid] == k) {
                 return mid;
             } else if (k < arr[mid]) {
-                return binarysearch(arr, k, l, r - 1);
+                return binarysearch(arr, k, l, mid - 1);
             } else {
-                return binarysearch(arr, k, l + 1, r);
+                return binarysearch(arr, k, mid + 1, r);
             }
         }
         return -1;
@@ -17,10 +17,10 @@ public class BinarySearchRecursive {
 
     public static void main(String[] args) {
         BinarySearchRecursive b = new BinarySearchRecursive();
-        int[] arr = { 1, 3, 5, 6, 7, 8, 11, 15, 18 };
-        int key = 11;
+        int[] arr = { 1, 3, 5, 7, 9, 10, 13, 15 };
+        int key = 9;
         int left = 0;
-        int right = arr.length - 1;
+        int right = arr.length-1;
 
         int index = binarysearch(arr, key, left, right);
 
