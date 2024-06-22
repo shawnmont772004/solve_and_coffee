@@ -1,4 +1,4 @@
-package DSA;
+package DSA.BinarySearchTree;
 
 import java.util.Scanner;
 
