@@ -58,6 +58,9 @@ public class Enqueue {
                 case 2:
                     q.display();
                     break;
+                case 3:
+                    sc.close();
+                    System.exit(0);
             }
         }
 
