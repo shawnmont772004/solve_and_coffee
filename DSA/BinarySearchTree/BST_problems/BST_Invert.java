@@ -18,7 +18,7 @@ public class BST_Invert {
         if (root == null) {
             return root;
         }
-        TreeNode temp;
+        Node temp;
 
         temp = root.left;
         root.left = root.right;
@@ -30,7 +30,7 @@ public class BST_Invert {
 
     }
 
-    public void inorder() {
+    public void inorder(Node root) {
         inorderRec(root);
     }
 
@@ -40,6 +40,7 @@ public class BST_Invert {
             System.out.print(root.key + " ");
             inorderRec(root.right);
         }
+        
     }
 
     public static void main(String[] args) {
@@ -52,6 +53,7 @@ public class BST_Invert {
         root.right.right = new Node(10);
         i.inorder(root);
         i.invertTree(root);
+        System.out.println();
         i.inorder(root);
 
     }
