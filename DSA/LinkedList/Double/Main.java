@@ -1,23 +1,28 @@
-package DSA.LinkedList.Single;
+package DSA.LinkedList.Double;
 
 import java.util.Scanner;
 
 class Node {
     int data;
     Node next;
+    Node prev;
 
     Node(int data) {
         this.data = data;
         this.next = null;
+        this.prev = null;
     }
 }
 
-class SinglyLinkedList {
+class DoublyLinkedList {
     Node head;
 
     // Insert at the front
     public void insertFront(int data) {
         Node newNode = new Node(data);
+        if (head != null) {
+            head.prev = newNode;
+        }
         newNode.next = head;
         head = newNode;
     }
@@ -33,6 +38,7 @@ class SinglyLinkedList {
                 temp = temp.next;
             }
             temp.next = newNode;
+            newNode.prev = temp;
         }
     }
 
@@ -40,6 +46,9 @@ class SinglyLinkedList {
     public void deleteFront() {
         if (head != null) {
             head = head.next;
+            if (head != null) {
+                head.prev = null;
+            }
         } else {
             System.out.println("List is empty.");
         }
@@ -53,10 +62,10 @@ class SinglyLinkedList {
             head = null;
         } else {
             Node temp = head;
-            while (temp.next.next != null) {
+            while (temp.next != null) {
                 temp = temp.next;
             }
-            temp.next = null;
+            temp.prev.next = null;
         }
     }
 
@@ -64,8 +73,7 @@ class SinglyLinkedList {
     public void insertAtPosition(int data, int position) {
         Node newNode = new Node(data);
         if (position == 0) {
-            newNode.next = head;
-            head = newNode;
+            insertFront(data);
         } else {
             Node temp = head;
             for (int i = 0; i < position - 1; i++) {
@@ -76,7 +84,11 @@ class SinglyLinkedList {
                 temp = temp.next;
             }
             newNode.next = temp.next;
+            if (temp.next != null) {
+                temp.next.prev = newNode;
+            }
             temp.next = newNode;
+            newNode.prev = temp;
         }
     }
 
@@ -86,15 +98,18 @@ class SinglyLinkedList {
             deleteFront();
         } else {
             Node temp = head;
-            for (int i = 0; i < position - 1; i++) {
-                if (temp == null || temp.next == null) {
+            for (int i = 0; i < position; i++) {
+                if (temp == null) {
                     System.out.println("Position out of bounds.");
                     return;
                 }
                 temp = temp.next;
             }
-            if (temp.next != null) {
-                temp.next = temp.next.next;
+            if (temp != null && temp.prev != null) {
+                temp.prev.next = temp.next;
+                if (temp.next != null) {
+                    temp.next.prev = temp.prev;
+                }
             } else {
                 System.out.println("Position out of bounds.");
             }
@@ -103,20 +118,19 @@ class SinglyLinkedList {
 
     // Delete a specific element
     public void deleteElement(int data) {
-        if (head == null) {
-            System.out.println("List is empty.");
-            return;
-        }
-        if (head.data == data) {
-            head = head.next;
-            return;
-        }
         Node temp = head;
-        while (temp.next != null && temp.next.data != data) {
+        while (temp != null && temp.data != data) {
             temp = temp.next;
         }
-        if (temp.next != null) {
-            temp.next = temp.next.next;
+        if (temp != null) {
+            if (temp.prev != null) {
+                temp.prev.next = temp.next;
+            } else {
+                head = temp.next;
+            }
+            if (temp.next != null) {
+                temp.next.prev = temp.prev;
+            }
         } else {
             System.out.println("Element not found.");
         }
@@ -133,12 +147,19 @@ class SinglyLinkedList {
     }
 
     // Display the list in reverse
-    public void displayReverse(Node node) {
-        if (node == null) {
+    public void displayReverse() {
+        if (head == null) {
             return;
         }
-        displayReverse(node.next);
-        System.out.print(node.data + " ");
+        Node temp = head;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.prev;
+        }
+        System.out.println();
     }
 
     // Peek at the front element
@@ -164,9 +185,9 @@ class SinglyLinkedList {
     }
 }
 
-public class Main {
-    public static void main(String[] args) {
-        SinglyLinkedList list = new SinglyLinkedList();
+public class DoublyLinkedList {
+    public static void DoublyLinkedList(String[] args) {
+        DoublyLinkedList list = new DoublyLinkedList();
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("Choose an operation:");
@@ -221,8 +242,7 @@ public class Main {
                     list.display();
                     break;
                 case 9:
-                    list.displayReverse(list.head);
-                    System.out.println();
+                    list.displayReverse();
                     break;
                 case 10:
                     list.peek();
