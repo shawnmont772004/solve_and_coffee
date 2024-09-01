@@ -36,7 +36,7 @@ public class SLL_delete {
         }
     }
 
-}
+
 
     public Node delete_end(Node head) {
         if (head == null) {
@@ -45,13 +45,14 @@ public class SLL_delete {
         } else {
 
             Node temp = head;
-            while (temp.next != null) {
+            while (temp.next.next != null) {
                 temp = temp.next;
             }
+            temp.next=null;
             return head;
-
         }
     }
+
 
     public static void main(String[] args) {
         SLL_delete s = new SLL_delete();
@@ -70,6 +71,8 @@ public class SLL_delete {
         s.display(head);
 
         head = s.delete_end(head);
+
+        s.display(head);
 
     }
 
