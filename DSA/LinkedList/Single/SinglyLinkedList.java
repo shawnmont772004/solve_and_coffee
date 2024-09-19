@@ -8,7 +8,7 @@ class Node {
 
     Node(int data) {
         this.data = data;
-        this.next = null;
+        next = null;
     }
 }
 
@@ -111,7 +111,7 @@ public class SinglyLinkedList {
             head = head.next;
             return;
         }
-        Node temp = head;
+        Node temp = head; 
         while (temp.next != null && temp.next.data != data) {
             temp = temp.next;
         }
